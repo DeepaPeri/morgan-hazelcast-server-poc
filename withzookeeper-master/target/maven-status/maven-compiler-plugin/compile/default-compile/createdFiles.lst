@@ -1,0 +1,8 @@
+com\hazelcast\withzookeeper\caching\StockPriceMapStore.class
+com\hazelcast\withzookeeper\HazelcastConfig.class
+com\hazelcast\withzookeeper\dao\StockPriceDAOImpl.class
+com\hazelcast\withzookeeper\dao\StockPriceDAO.class
+com\hazelcast\withzookeeper\entities\StockPrice.class
+com\hazelcast\withzookeeper\dao\service\StockPriceServiceImpl.class
+com\hazelcast\withzookeeper\WithzookeeperApplication.class
+com\hazelcast\withzookeeper\dao\service\StockPriceService.class

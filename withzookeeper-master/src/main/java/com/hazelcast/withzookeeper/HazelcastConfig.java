@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.DiscoveryStrategyConfig;
+import com.hazelcast.config.MapConfig;
+import com.hazelcast.config.MapStoreConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.spi.properties.GroupProperty;
@@ -26,6 +28,8 @@ public class HazelcastConfig {
 		config.setProperty(GroupProperty.DISCOVERY_SPI_ENABLED.getName(), "true");
 		config.getNetworkConfig().getJoin().getDiscoveryConfig().addDiscoveryStrategyConfig(discoveryStrategyConfig);
 		
+		configureStocksMap(config);
+		
 		return config;
 	}
 	
@@ -41,5 +45,15 @@ public class HazelcastConfig {
 		discoverStrategyConfig.addProperty(ZookeeperDiscoveryProperties.GROUP.key(), hazelcastGroup);
 		
 		return discoverStrategyConfig;
+	}
+	
+	public void configureStocksMap(Config configuration) {
+		MapConfig stocksMapConfig = configuration.getMapConfig("stocksMap");
+		MapStoreConfig stocksMapStoreConfig = stocksMapConfig.getMapStoreConfig();
+		
+		stocksMapStoreConfig
+			.setEnabled(true)
+			.setClassName("com.hazelcast.withzookeeper.caching.StockPriceMapStore");
+		
 	}
 }
