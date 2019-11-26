@@ -7,21 +7,25 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.hazelcast.core.MapStore;
 import com.hazelcast.withzookeeper.entities.StockPrice;
 
+@Component
 public class StockPriceMapStore implements MapStore<String, StockPrice>{
 
 	@Autowired
     private EntityManager entityManager;
 	
+	@Transactional
 	private Session getSession() {
-		return entityManager.unwrap(Session.class);
+		return entityManager.getEntityManagerFactory().createEntityManager().unwrap(Session.class);
 	}
 	
 	@Override

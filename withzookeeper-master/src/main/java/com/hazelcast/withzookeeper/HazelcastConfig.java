@@ -1,5 +1,6 @@
 package com.hazelcast.withzookeeper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,11 +12,15 @@ import com.hazelcast.config.MapStoreConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.spi.properties.GroupProperty;
+import com.hazelcast.withzookeeper.caching.StockPriceMapStore;
 import com.hazelcast.zookeeper.ZookeeperDiscoveryProperties;
 import com.hazelcast.zookeeper.ZookeeperDiscoveryStrategyFactory;
 
 @Configuration
 public class HazelcastConfig {
+	@Autowired
+	private StockPriceMapStore mapStore;
+	
 	@Bean
 	public HazelcastInstance getHazelcastInstance(Config configuration) {
 		return Hazelcast.newHazelcastInstance(configuration);
@@ -53,7 +58,6 @@ public class HazelcastConfig {
 		
 		stocksMapStoreConfig
 			.setEnabled(true)
-			.setClassName("com.hazelcast.withzookeeper.caching.StockPriceMapStore");
-		
+			.setImplementation(mapStore);
 	}
 }

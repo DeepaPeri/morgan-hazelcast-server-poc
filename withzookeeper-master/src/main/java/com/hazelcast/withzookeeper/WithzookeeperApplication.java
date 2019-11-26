@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
+import com.hazelcast.withzookeeper.entities.StockPrice;
 
 @SpringBootApplication
 public class WithzookeeperApplication {
@@ -13,7 +15,9 @@ public class WithzookeeperApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(WithzookeeperApplication.class, args);
 		HazelcastInstance server = context.getBean(HazelcastInstance.class);
 		
-		System.out.println("server is not null: " + server.getClass().getCanonicalName());
+		IMap<String, StockPrice> map = server.getMap("stocksMap");
+		StockPrice p = map.get("RAYMOND");
+        
+        System.out.println("Stock is: " + p);
 	}
-
 }
