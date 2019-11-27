@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- <persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence 
+    http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="StockPriceMapStore"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>com.hazelcast.withzookeeper.caching.StockPriceMapStore</class>
+		<properties> <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/> 
+			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/> 
+			<property name="hibernate.show_sql" value="false"/> <property name="hibernate.connection.username" 
+			value="user"/> <property name="hibernate.connection.password" value=""/> 
+			<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/mydb"/> 
+			</properties>
+	</persistence-unit>
+</persistence> -->
+
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.2"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+    <!-- Define persistence unit -->
+    <persistence-unit name="StockPriceMapStore">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    </persistence-unit>
+</persistence>

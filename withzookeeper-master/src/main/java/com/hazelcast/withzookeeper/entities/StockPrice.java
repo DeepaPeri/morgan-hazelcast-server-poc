@@ -1,15 +1,13 @@
 package com.hazelcast.withzookeeper.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import org.hibernate.annotations.UpdateTimestamp;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -32,12 +30,9 @@ public class StockPrice implements Serializable {
 	
 	@Column(name="price")
 	private float price;
-	
 	public StockPrice() {
 		
 	}
-	
-
 	public StockPrice(String stockName, float price) {
 		this.stockName = stockName;
 		this.price = price;

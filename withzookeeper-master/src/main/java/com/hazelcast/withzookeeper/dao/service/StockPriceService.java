@@ -2,9 +2,11 @@ package com.hazelcast.withzookeeper.dao.service;
 
 import java.util.List;
 
+
 import org.springframework.stereotype.Service;
 
 import com.hazelcast.withzookeeper.entities.StockPrice;
+
 
 @Service
 public interface StockPriceService {

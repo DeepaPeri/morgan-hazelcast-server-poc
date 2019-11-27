@@ -1,12 +1,15 @@
 package com.hazelcast.withzookeeper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.DiscoveryStrategyConfig;
+import com.hazelcast.config.InMemoryFormat;
 import com.hazelcast.config.MapConfig;
 import com.hazelcast.config.MapStoreConfig;
 import com.hazelcast.core.Hazelcast;
@@ -15,6 +18,8 @@ import com.hazelcast.spi.properties.GroupProperty;
 import com.hazelcast.withzookeeper.caching.StockPriceMapStore;
 import com.hazelcast.zookeeper.ZookeeperDiscoveryProperties;
 import com.hazelcast.zookeeper.ZookeeperDiscoveryStrategyFactory;
+import static com.hazelcast.config.EvictionPolicy.LRU;
+import static com.hazelcast.config.EvictionPolicy.LFU;
 
 @Configuration
 public class HazelcastConfig {
@@ -32,9 +37,9 @@ public class HazelcastConfig {
 		config.getNetworkConfig().getJoin().getMulticastConfig().setEnabled(false);
 		config.setProperty(GroupProperty.DISCOVERY_SPI_ENABLED.getName(), "true");
 		config.getNetworkConfig().getJoin().getDiscoveryConfig().addDiscoveryStrategyConfig(discoveryStrategyConfig);
-		
 		configureStocksMap(config);
-		
+		config.getManagementCenterConfig().setEnabled(true);
+		config.getManagementCenterConfig().setUrl("http://localhost:8090/hazelcast-mancenter");
 		return config;
 	}
 	
@@ -54,6 +59,10 @@ public class HazelcastConfig {
 	
 	public void configureStocksMap(Config configuration) {
 		MapConfig stocksMapConfig = configuration.getMapConfig("stocksMap");
+		//stocksMapConfig.setInMemoryFormat(InMemoryFormat.NATIVE);
+		// Eviction policy is set to Least Recently Used
+		stocksMapConfig.setEvictionPolicy(LRU);
+		stocksMapConfig.setEvictionPolicy(LFU);
 		MapStoreConfig stocksMapStoreConfig = stocksMapConfig.getMapStoreConfig();
 		
 		stocksMapStoreConfig
